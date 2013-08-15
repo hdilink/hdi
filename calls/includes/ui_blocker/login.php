@@ -37,12 +37,14 @@
 </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function()
+    jQuery(document).ready(function($)
     {
-        // Delay target
-        setTimeout(function()
+        // Submit the form when the Enter key is pressed
+        document.forms.frm_login.onkeyup = function(event)
         {
-            $('#login_id').focus();
-        }, 500);
+            if (event.which == 13) {
+                $user_auth(document.forms.frm_login);
+            }
+        }
     });
 </script>

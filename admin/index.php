@@ -118,7 +118,7 @@
                                                         </ul>
                                                     <?php
                                                     } ?>
-                                                <?
+                                                <?php
                                                 }
                                                 ?>
                                             </li>
@@ -127,7 +127,7 @@
                                     </ul>
                                 <?php
                                 } ?>
-                            <?
+                            <?php
                             }
                             ?>
                         </li>
@@ -137,6 +137,9 @@
             <?php
             }
             ?>
+                
+            <div class="r_float clock white pad10px"></div>
+                
             <div class="clear"></div>
             </div>
             <div id="shortcut_menu">
@@ -264,7 +267,27 @@
             <div style="position: relative;">
                 <div id="identity">
                     <div class="horizontal_pad">
-                        <div id="logo"><img src="../calls/images/logo.png" /></div>
+                        <div id="logo" class="l_float">
+                            <table class="invisible_table">
+                                <tr>
+                                    <td style="vertical-align: middle;height:40px;">
+                                        <img src="../calls/images/logo.png" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="logged_in_user" class="r_float">
+                            <table class="invisible_table">
+                                <tr>
+                                    <td style="vertical-align: middle;padding-right:10px;">
+                                        <button type="button" name="logged_in_user_btn" id="logged_in_user_btn"></button>
+                                    </td>
+                                    <td class="font16 white text_shadow bold" style="vertical-align: middle;height:40px;">
+                                        <?php Int_Profile::who_am_i($session->user_id); ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -25,6 +25,31 @@ class Int_Profile
         return $this->database_obj->execute_query($sql,$format);
     }
     
+    public static function who_am_i($user_id)
+    {
+        // Init.
+        $names = '';
+        
+        if('' != $user_id)
+        {
+            // SQL
+            $sql = "SELECT CONCAT(o.option_name,' ',i.surname,', ',i.first_name) as name
+                    FROM int_profiles i
+                    INNER JOIN options o
+                    ON o.option_id=i.title
+                    WHERE i.user_id='$user_id'
+                    LIMIT 1";
+            
+            // Execute
+            $exec = Database::obj()->execute_query($sql,'Array');
+            
+            // Display the Logged in User
+            if (!empty($exec)) $names = $exec[0]['name'];
+        }
+        
+        echo $names;
+    }
+    
     public function dropdown_list($option_name)
     {
         if('' != $option_name)

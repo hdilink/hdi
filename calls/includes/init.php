@@ -6,7 +6,7 @@
 date_default_timezone_set('UTC');
 
 // Physical
-defined('ROOT')     ? NULL: define('ROOT', 'C:' .DIRECTORY_SEPARATOR. 'Program Files (x86)' .DIRECTORY_SEPARATOR. 'Zend' .DIRECTORY_SEPARATOR.  'Apache2' .DIRECTORY_SEPARATOR. 'htdocs' .DIRECTORY_SEPARATOR. 'hdi');
+defined('ROOT')     ? NULL: define('ROOT', 'C:' .DIRECTORY_SEPARATOR. 'wamp' .DIRECTORY_SEPARATOR. 'www' .DIRECTORY_SEPARATOR. 'hdi');
 defined('CLASSES')  ? NULL: define('CLASSES', ROOT .DIRECTORY_SEPARATOR. 'calls' .DIRECTORY_SEPARATOR. 'classes');
 defined('INCLUDES') ? NULL: define('INCLUDES', ROOT .DIRECTORY_SEPARATOR. 'calls' .DIRECTORY_SEPARATOR. 'includes');
 defined('PLUGINS')  ? NULL: define('PLUGINS', ROOT .DIRECTORY_SEPARATOR. 'calls' .DIRECTORY_SEPARATOR. 'plugins' .DIRECTORY_SEPARATOR. 'picture_plugins');
@@ -22,8 +22,8 @@ function __autoload($class_name)
     if(file_exists($path)) {
         require_once($path);
     } else {
-        echo realpath(__DIR__);        
-        //die("The file <b>{$class_name}.php</b> could not be found.");
+        //echo realpath(__DIR__);
+        die("The file <b>{$class_name}.php</b> could not be found.");
     }
 }
 ?>

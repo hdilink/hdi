@@ -383,13 +383,23 @@ body{
             background-repeat: repeat-x;
             border-top: 1px solid #333;
             width: 100%;
-            bottom: -44px;
-            height: 43px;
+            bottom: -41px;
+            height: 40px;
             z-index: 99;
         }
-            #logo{
-                padding: 10px 0;
-            }
+            #logo{}
+            #logged_in_user{}
+                #logged_in_user_btn{
+                    padding:0;
+                    /*border-left:#fff solid 2px;
+                    border-top:#fff solid 2px;
+                    border-right:#fff solid 2px;
+                    border-bottom:#fff solid 2px;*/
+                    border:#444 solid 1px;
+                    /*background:#fff url('../images/patients/mini_sample.jpg') top center no-repeat;*/
+                    height:30px;
+                    width:30px;
+                }
 
         /* TABS */
         .tab .ui-tabs {
@@ -539,11 +549,10 @@ body{
                 background-color: #FFF;
             }
                 .side_kick {
-                    background: #F5F5F5 url(../images/dot1px.gif) right repeat-y;
+                    background: #F5F5F5 url(../images/left_nav_bg.png) right repeat-y;
                     float: left;
                     width: 15%;
-                    /*border-top: #E2E2E2 solid 1px;
-                    border-bottom: #E2E2E2 solid 1px;*/
+                    border-bottom: #999 solid 1px;
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
@@ -567,24 +576,22 @@ body{
                                 -khtml-text-shadow: #FFF 1px 1px;
                             }
                             .side_kick li a:hover{
-                                background: #EEE url(../images/dot1px.gif) right repeat-y;
+                                background: #EEE url(../images/left_nav_bg.png) right repeat-y;
                             }
                 .component {
                     width: 70%;
                     float: left;
-                    /*border-top: #E2E2E2 solid 1px;
-                    border-bottom: #E2E2E2 solid 1px;*/
+                    border-bottom: #999 solid 1px;
                     background-color: #FFF;
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
                 .tips {
-                    background: #F5F5F5 url(../images/dot1px.gif) left repeat-y;
+                    background: #F5F5F5 url(../images/right_nav_bg.png) left repeat-y;
                     width: 15%;
                     float: left;
-                    /*border-top: #E2E2E2 solid 1px;
-                    border-bottom: #E2E2E2 solid 1px;*/
-                    overflow-y: hidden;
+                    border-bottom: #999 solid 1px;
+                    overflow-y: auto;
                     overflow-x: hidden;
                 }
                     .tips > div {
@@ -593,8 +600,8 @@ body{
                     }
                     
     #footer {
-        border-top: #999 solid 1px;
-        /*background-image: url('../images/tone.png');*/
+        /*border-top: #999 solid 1px;
+        background-image: url('../images/tone.png');*/
         background-repeat: repeat-x;
         height: 30px;
         background-color: #F5F5F5;

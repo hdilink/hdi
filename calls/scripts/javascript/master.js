@@ -11,6 +11,15 @@
  */
 $(document).ready(function()
 {
+    // System Clock              
+    var $interval = self.setInterval(function(){$clock()},1000),
+    $clock = function()
+    {
+        var $date = new Date(),
+            $time = $date.toLocaleTimeString();
+        $('.clock').html($time);
+    };
+        
     ////////////////////
     /* OPEN SOME TABS */
     ////////////////////
