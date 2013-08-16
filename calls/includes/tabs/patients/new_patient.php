@@ -6,6 +6,7 @@
     $int_profile  = new Int_Profile();
     $hospital     = new Hospital();
     $option       = new Option();
+    $form         = new Form();
     
     // Init.
     $next_code = '';
@@ -70,19 +71,19 @@
                     <table class="visible_table">
                         <tr>
                             <td class="percent35">Title:</td>
-                            <td><?php dropdown($title_arr,'sel_title','','','selbox','','Select:');?></td>
+                            <td><?php $form->select($title_arr,'sel_title'); ?></td>
                         </tr>
                         <tr>
                             <td class="percent35">First Name:</td>
-                            <td><input name="txt_fname" id="txt_fname" class="txtbox" value="" /></td>
+                            <td><?php $form->textbox('txt_fname'); ?></td>
                         </tr>
                         <tr>
                             <td>Middle Name:</td>
-                            <td><input name="txt_mname" id="txt_mname" class="txtbox" value="" /></td>
+                            <td><?php $form->textbox('txt_mname'); ?></td>
                         </tr>
                         <tr>
                             <td>Surname:</td>
-                            <td><input name="txt_sname" id="txt_sname" class="txtbox" value="" /></td>
+                            <td><?php $form->textbox('txt_sname'); ?></td>
                         </tr>
                         <tr>
                             <td>Gender:</td>
@@ -92,7 +93,7 @@
                                     $gender_arr = item_array('gender');
                                     if ('' != $gender_arr)
                                     {
-                                        dropdown($gender_arr, 'sel_gender', '', '', 'selbox', '', 'Select:');
+                                        $form->select($gender_arr,'sel_gender');
                                     }
                                 ?>
                             </td>

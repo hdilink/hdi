@@ -44,7 +44,7 @@
         </script>
         
         <!-- Global CSS Reset -->
-        <link rel="stylesheet" href="calls/stylesheets/reset.min.css" media="all" />
+        <link rel="stylesheet" href="calls/stylesheets/reset.css" media="all" />
         <!-- JQuery CSS -->
         <link rel="stylesheet" href="calls/scripts/jquery/themes/base/jquery-ui.css" media="all" />
         <!-- Interface CSS -->
