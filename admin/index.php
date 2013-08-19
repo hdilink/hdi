@@ -30,7 +30,7 @@
         <script>
             var login_blocker = function ()
                 {
-                    $ui_engine.block({title:'Login',file:'login',width:'400',height:'240',buttons:'NYY'});
+                    $ui_engine.block({title:'Login',file:'login',width:'400',height:'240',buttons:'NNY'});
                 },
                 
                 get_access_blocker = function ()
@@ -45,7 +45,7 @@
                 
                 backup_blocker = function ()
                 {
-                    $ui_engine.block({title:'Backup',file:'backup',width:'350',height:'210',buttons:'NYY'});
+                    $ui_engine.block({title:'Backup',file:'backup',width:'350',height:'210',buttons:'NNY'});
                 };
         </script>
         
@@ -271,7 +271,7 @@
                             <table class="invisible_table">
                                 <tr>
                                     <td style="vertical-align: middle;height:40px;">
-                                        <img src="../calls/images/logo.png" />
+                                        <a href="http://hdi.codefully.net" target="_blank" title="Health Data Infrastructure"><img src="../calls/images/logo.png" /></a>
                                     </td>
                                 </tr>
                             </table>

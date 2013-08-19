@@ -240,9 +240,8 @@ body{
     }
         #menu{
             position: relative;
-            /*background-image: url('../images/button-bg.png');
-            background-repeat: repeat-x;*/
             background-color: #444;
+            background-image: linear-gradient(#666, #000 100%);            
             padding: 0 20px;
             z-index: 100;
         }
@@ -347,7 +346,7 @@ body{
         
         #shortcut_menu{
             background: #FFF url('../images/menu_bg.png') 0 0 repeat;
-            border-bottom: #CCC solid 1px;
+            border-bottom: #999 solid 1px;
         }
             #shortcut_menu li{
                 float: left;
@@ -362,10 +361,13 @@ body{
                     color:#777;
                     background-image: url('../images/tab-img.png');
                     background-color: transparent;
-                    border-right: #E2E2E2 solid 1px;
+                    border-right: #ccc solid 1px;
                 }
                 #shortcut_menu li:last-child .tablet{
                     border-right: none;
+                }
+                #shortcut_menu li .tablet:hover{
+                    background-color: #f5f5f5;
                 }
                     #shortcut_menu .label{
                         position: absolute;
@@ -536,7 +538,7 @@ body{
                         font-weight: bold;
                         font-size: 14px;
                         padding: 2px 10px 0 10px;
-                        color: #777;
+                        color: #000;
             
                         /* Text Shadow */
                          text-shadow: #FFF 1px 1px;
@@ -549,7 +551,8 @@ body{
                 background-color: #FFF;
             }
                 .side_kick {
-                    background: #F5F5F5 url(../images/left_nav_bg.png) right repeat-y;
+                    /*background: #F9F9F9 url(../images/left_nav_bg.png) right repeat-y;*/
+                    background: #F9F9F9 url(../images/dot1px.gif) right repeat-y;
                     float: left;
                     width: 15%;
                     border-bottom: #999 solid 1px;
@@ -576,18 +579,21 @@ body{
                                 -khtml-text-shadow: #FFF 1px 1px;
                             }
                             .side_kick li a:hover{
-                                background: #EEE url(../images/left_nav_bg.png) right repeat-y;
+                                background-color: #eee;
+                                /*background: #EEE url(../images/left_nav_bg.png) right repeat-y;*/
+                                background: #eee url(../images/dot1px.gif) right repeat-y;
                             }
                 .component {
                     width: 70%;
                     float: left;
                     border-bottom: #999 solid 1px;
-                    background-color: #FFF;
+                    background-color: #fff;
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
                 .tips {
-                    background: #F5F5F5 url(../images/right_nav_bg.png) left repeat-y;
+                    /*background: #F9F9F9 url(../images/right_nav_bg.png) left repeat-y;*/
+                    background: #F9F9F9 url(../images/dot1px.gif) left repeat-y;
                     width: 15%;
                     float: left;
                     border-bottom: #999 solid 1px;
@@ -599,6 +605,43 @@ body{
                         height: inherit;
                     }
                     
+                    /* Side Kick and Tips content */
+                    ul.pool > li{}
+                    ul.pool table td:first-child{padding-left:10px;border-left:#ccc solid 1px;}
+                    ul.pool table td:last-child{padding-right:10px;}
+                        ul.pool > li > a{
+                            display:block;
+                            padding:10px;
+                            background-color: #eee;
+                            background-image: linear-gradient(#f9f9f9, #d7d7d7 100%);
+                            border-top:#e2e2e2 solid 1px;
+                            border-left:#ccc solid 1px;
+                            border-bottom:#aaa solid 1px;
+                            color:#666;
+                            font-weight:bold;
+                                    
+                            /* Text Shadow */
+                             text-shadow: #fff 1px 1px;
+                            -moz-text-shadow: #fff 1px 1px;
+                            -webkit-text-shadow: #fff 1px 1px;
+                            -khtml-text-shadow: #fff 1px 1px;
+                        }
+                            ul.pool > li > ul{
+                                display:block;
+                                padding:0 0 5px;
+                            }
+                            ul.pool > li > ul > li > a{
+                                display:block;
+                                padding:5px 10px;
+                                cursor: pointer;
+                                /*background-color:orange;*/
+                                border-left:#ccc solid 1px;
+                                color:#666;
+                            }
+                            ul.pool > li > ul > li > a:hover{
+                                font-weight:bold;
+                            }
+        
     #footer {
         /*border-top: #999 solid 1px;
         background-image: url('../images/tone.png');*/
@@ -692,8 +735,10 @@ body{
 * html .ui-autocomplete {
     height: 100px;
 }
-        
+
+
 /* TABLES */
+
 .visible_table{width:100%;border-collapse:collapse;}
 .visible_table td{padding:5px;}/*border-top:#E2E2E2 solid 1px;border-bottom:#E2E2E2 solid 1px;*/
 .visible_table ol{padding:10px 30px 5px 30px}
@@ -709,6 +754,16 @@ body{
 .invisible_table tr:nth-child(odd) {background: transparent;}
 .invisible_table tr:nth-child(even) {background: transparent;}
 .invisible_table tr:first-child td{background: transparent;}
+
+.inner_table{width:100%;padding:0;margin:0;}
+.inner_table td{padding:0 3px;margin:0;border:none;vertical-align: middle;}
+.inner_table td:first-child{padding:0;background: transparent;}
+.inner_table td:last-child{padding:0;background: transparent;}
+.inner_table ol{padding:10px 30px 5px 30px}
+.inner_table ol li{padding:5px 0}
+.inner_table tr:nth-child(odd) {background: transparent;}
+.inner_table tr:nth-child(even) {background: transparent;}
+
 
 /* FORM */
 
@@ -760,69 +815,102 @@ button.btn_pix {
     padding: 3px;
 }
 
-/* Advanced Form Components */
 
-/* Text Box */
-.text_box {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    display: block;
-    margin: 0;
-    padding: 3px;
-}
-    .text {
-        border: none;
-        margin: 0;
-        padding: 0;
-        width: 100%;
+/********************************
+** Form Class Components START **
+********************************/
+
+    /* General Settings */
+    .outer_box {
+         border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -khtml-border-radius: 3px;
+        
+        /*-moz-box-shadow: 0 2px 5px -1px #666;
+        -webkit-box-shadow: 0 2px 5px -1px #666;
+        -khtml-box-shadow: 0 2px 5px -1px #666;
+         box-shadow: 0 2px 5px -1px #666;*/
     }
-    
-/* Select Box */
-.select_box {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-    .select {
-        border: none;
+                
+
+    /* Text Box */
+    .text_box {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: block;
         margin: 0;
         padding: 3px;
-        width: 100%;
     }
-    
-/* Area Box */
-.area_box {
-    background-color: #FFFFFF;
-    border: 1px solid #CCCCCC;
-    display: block;
-    margin: 0;
-    padding: 3px;
-}
-    .area {
-        border: none;
+        .text {
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        
+    /* Select Box */
+    .select_box {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: block;
         margin: 0;
         padding: 0;
-        width: 100%;
     }
-    
-/* Button Box */
-.button_box {
-    background-color: #FFFFCC;
-    border: 1px solid #CCCCCC;
-    display: block;
-    margin: 0;
-    padding: 0;
-}
-    .button {
-        border: none;
-        cursor: pointer;
+        .select {
+            border: none;
+            margin: 0;
+            padding: 3px;
+            width: 100%;
+            
+             border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -khtml-border-radius: 3px;
+        }
+        
+    /* Area Box */
+    .area_box {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        display: block;
         margin: 0;
         padding: 3px;
-        width: 100%;
     }
+        .area {
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        
+    /* Button Box */
+    .button_box {
+        background-color: #ff0;
+        border: 1px solid #ccc;
+        display: block;
+        margin: 0;
+        padding: 0;
+    }
+        .button {
+            border: none;
+            cursor: pointer;
+            margin: 0;
+            padding: 5px 3px;
+            width: 100%;
+            height:inherit;
+            
+             border-radius: 3px;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            -khtml-border-radius: 3px;
+        }
+
+/********************************
+** Form Class Components END **
+********************************/
+
 
 /* SWITCHES */
-.tab .ui-tabs .ui-tabs-nav li.ui-tabs-active a, .tab .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .tab .ui-tabs .ui-tabs-nav li.ui-tabs-loading a, .legend, .coy_color{color: yellowgreen;}
-.tab .ui-state-default a, .tab .ui-state-default a:link, .tab .ui-state-default a:visited, .tab .ui-tabs .ui-tabs-nav, .coy_bg, button, input[type="button"], input[type="submit"], input[type="reset"]{background-color: yellowgreen;}
+.tab .ui-tabs .ui-tabs-nav li.ui-tabs-active a, .tab .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .tab .ui-tabs .ui-tabs-nav li.ui-tabs-loading a, .legend, .coy_color{color: #39c;}
+.tab .ui-state-default a, .tab .ui-state-default a:link, .tab .ui-state-default a:visited, .tab .ui-tabs .ui-tabs-nav, .coy_bg, button, input[type="button"], input[type="submit"], input[type="reset"]{background-color: #39c;}

@@ -25,13 +25,14 @@ class Ext_Profile
         return $this->database_obj->execute_query($sql,$format);
     }
     
-    public function dropdown_list()
+    public function dropdown_list($id)
     {
         // SQL
         $sql = "SELECT CONCAT(o.option_name,' ',e.surname,', ',e.first_name) as name, e.ext_profile_id as id
                 FROM ext_profiles e
                 INNER JOIN options o
                 ON o.option_id=e.title
+                WHERE e.hospital_id='$id'
                 ORDER BY e.surname";
         
         // Execute

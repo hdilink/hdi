@@ -8,57 +8,13 @@
     $option       = new Option();
     $form         = new Form();
     
-    // Init.
-    $next_code = '';
-    $relation_arr = $patient_type_arr = $account_status_arr = $marital_status_arr = $religion_arr = $occupation_arr =  $country_arr = $title_arr = array();
-    if ($option instanceof Option)
+    // Patient ID Alias Generator
+    $pid_alias = $option->next_code('pid_alias');
+    if ($pid_alias != '')
     {
-        // Patient ID Alias Generator
-        $pid_alias = $option->next_code('pid_alias');
-        if ($pid_alias != '')
-        {
-            $next_code = 'P' . date('ym') . '/' . pad($pid_alias, 2);
-        } else {
-            $next_code = '';
-        }
-        
-        // Relationship
-        $relation_arr = $option->dropdown_list('relationship');
-        
-        // Patient type
-        $patient_type_arr = $option->dropdown_list('patient_type');
-        
-        // Account status
-        $account_status_arr = $option->dropdown_list('account_status');
-        
-        // Marital status
-        $marital_status_arr = $option->dropdown_list('marital_status');
-        
-        // Religion
-        $religion_arr = $option->dropdown_list('religion');
-        
-        // Occupation
-        $occupation_arr = $option->dropdown_list('occupation');
-        
-        // Country
-        $country_arr = $option->dropdown_list('country');
-        
-        // Title
-        $title_arr = $option->dropdown_list('title');
-    }
-    
-    // Hospital
-    $refhospital_arr = array();
-    if ($hospital instanceof Hospital)
-    {
-        $refhospital_arr = $hospital->dropdown_list('EXT');
-    }
-    
-    // Internal Doctors
-    $intdoc_arr = array();
-    if ($int_profile instanceof Int_Profile)
-    {
-        $intdoc_arr = $int_profile->dropdown_list('Doctor');
+        $next_code = 'P' . date('ym') . '/' . pad($pid_alias, 2);
+    } else {
+        $next_code = '';
     }
 ?>
     
@@ -71,32 +27,23 @@
                     <table class="visible_table">
                         <tr>
                             <td class="percent35">Title:</td>
-                            <td><?php $form->select($title_arr,'sel_title'); ?></td>
+                            <td><?php Form::selectbox($option->dropdown_list('title'),'sel_title'); ?></td>
                         </tr>
                         <tr>
                             <td class="percent35">First Name:</td>
-                            <td><?php $form->textbox('txt_fname'); ?></td>
+                            <td><?php Form::textbox('txt_fname'); ?></td>
                         </tr>
                         <tr>
                             <td>Middle Name:</td>
-                            <td><?php $form->textbox('txt_mname'); ?></td>
+                            <td><?php Form::textbox('txt_mname'); ?></td>
                         </tr>
                         <tr>
                             <td>Surname:</td>
-                            <td><?php $form->textbox('txt_sname'); ?></td>
+                            <td><?php Form::textbox('txt_sname'); ?></td>
                         </tr>
                         <tr>
                             <td>Gender:</td>
-                            <td>
-                                <?php
-                                    $gender_arr = '';
-                                    $gender_arr = item_array('gender');
-                                    if ('' != $gender_arr)
-                                    {
-                                        $form->select($gender_arr,'sel_gender');
-                                    }
-                                ?>
-                            </td>
+                            <td><?php Form::selectbox(item_array('gender'),'sel_gender'); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -112,14 +59,14 @@
                         <tr>
                             <td style="padding-right:15px;">
                                 <div>
-                                    <div style='height:0px;width:0px;overflow:hidden;'><input type="file" name="fil_patient_pix" id="fil_patient_pix" onchange="javascript:$process_uploader();" required="required" accept="image/*" title="Please select an image" /></div>
+                                    <div style='height:0px;width:0px;overflow:hidden;'><input type="file" name="fil_patient_pix" id="fil_patient_pix" onchange="javascript:$process_uploader();" accept="image/*" title="Please select an image" /></div>
                                     <button type="button" name="btn_patient_pix" id="btn_patient_pix" class="btn_pix rnd_oooo"><img id="pix_display" src="../calls/images/patients/sample.jpg" class="rnd_oooo" /></button>
                                 </div>
                             </td>
                             <td class="percent100" style="vertical-align:top;">
                                 <table class="visible_table">
                                     <tr>
-                                        <td>Patient&nbsp;ID:</td><td><input name="txt_pid_alias" id="txt_pid_alias" class="txtbox" value="<?php echo $next_code; ?>" /></td>
+                                        <td>Patient&nbsp;ID:</td><td><?php Form::textbox('txt_pid_alias',$next_code); ?></td>
                                     </tr>
                                     <tr>
                                         <td>First&nbsp;Visit:</td><td class="bold"><?php echo date('F d, Y.') ?></td>
@@ -146,21 +93,19 @@
                     <table class="visible_table">
                         <tr>
                             <td class="percent35" style="vertical-align:top;">Address:</td>
-                            <td>
-                                <textarea name="txta_address" id="txta_address" class="txtbox" rows="3"></textarea>
-                            </td>
+                            <td><?php Form::textarea('txta_address'); ?></td>
                         </tr>
                         <tr>
                             <td>Email:</td>
-                            <td><input name="txt_email" id="txt_email" class="txtbox" value=""  /></td>
+                            <td><?php Form::textbox('txt_email'); ?></td>
                         </tr>
                         <tr>
                             <td>Phone Number 1:</td>
-                            <td><input name="txt_phone1"  id="txt_phone1" class="txtbox" value="" /></td>
+                            <td><?php Form::textbox('txt_phone1'); ?></td>
                         </tr>
                         <tr>
                             <td>Phone Number 2:</td>
-                            <td><input name="txt_phone2" id="txt_phone2" class="txtbox" value=""   /></td>
+                            <td><?php Form::textbox('txt_phone2'); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -176,61 +121,41 @@
                     <table class="visible_table">
                         <tr>
                             <td class="percent35">Patient Type:</td>
-                            <td>
-                                <?php dropdown($patient_type_arr,'sel_ptype','','','selbox','','Select:');?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('patient_type'),'sel_ptype'); ?></td>
                         </tr>
                         <tr>
                             <td>Assigned Doctor:</td>
-                            <td><?php dropdown($intdoc_arr, 'sel_intdoc', '', '', 'selbox', '', 'Select:'); ?></td>
+                            <td><?php Form::selectbox($int_profile->dropdown_list('Doctor'),'sel_intdoc'); ?></td>
                         </tr>
                         <tr>
                             <td class="percent35">Blood Type:</td>
                             <td>
-                                <table class="invisible_table">
+                                <table class="inner_table">
                                     <tr>
-                                        <td class="percent40" style="padding-left:0;padding-top:0;padding-bottom:0;">
-                                            <?php
-                                                $blood_types_arr = '';
-                                                $blood_types_arr = item_array('blood_type');
-                                                if ('' != $blood_types_arr)
-                                                {
-                                                    dropdown($blood_types_arr, 'sel_bloodtype', '', '', 'selbox', '', 'Select:');
-                                                }
-                                            ?>
-                                        </td>
-                                        <td class="r_align" style="padding-left:20px;">RH:</td>
-                                        <td class="percent40" style="padding-right:0;padding-top:0;padding-bottom:0;">
-                                            <?php
-                                                $rh_arr = '';
-                                                $rh_arr = item_array('rh');
-                                                if ('' != $rh_arr)
-                                                {
-                                                    dropdown($rh_arr, 'sel_rh', '', '', 'selbox', '', 'Select:');
-                                                }
-                                            ?>
-                                        </td>
+                                        <td class="percent40"><?php Form::selectbox(item_array('blood_type'),'sel_bloodtype'); ?></td>
+                                        <td class="r_align">RH: </td>
+                                        <td class="percent40"><?php Form::selectbox(item_array('rh'),'sel_rh'); ?></td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
                             <td>Referring Hospital:</td>
-                            <td><?php dropdown($refhospital_arr, 'sel_refhospital', 'onchange', "\$ajax_loading('ref_doc','../calls/includes/switch.php','&opt=ref_doc&value='+this.value);", 'selbox', '', 'Select:'); ?></td>
+                            <td>
+                                <?php
+                                    Form::selectbox($hospital->dropdown_list('EXT'),'sel_refhospital','',array(
+                                        'onchange' => "javascript:\$ajax_loading('ref_doc','../calls/includes/switch.php','&opt=ref_doc&value='+this.value);"
+                                    ));
+                                ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>Referring Doctor:</td>
-                            <td id="ref_doc">
-                                <select name="sel_extdoc" id="sel_extdoc" class="selbox">
-                                    <option value="">Select:</option>
-                                </select>
-                            </td>
+                            <td id="ref_doc"><?php Form::selectbox(array(),'sel_extdoc'); ?></td>
                         </tr>
                         <tr>
                             <td>Account Status:</td>
-                            <td>
-                                <?php dropdown($account_status_arr, 'sel_status', '', '', 'selbox', '12', 'Select:'); ?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('account_status'),'sel_status','12'); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -248,50 +173,39 @@
                     <table class="visible_table">
                         <tr>
                             <td class="percent35">First Name:</td>
-                            <td><input name="txt_kin_fname" id="txt_kin_fname" class="txtbox" value="" /></td>
+                            <td><?php Form::textbox('txt_kin_fname'); ?></td>
                         </tr>
                         <tr>
                             <td>Middle Name:</td>
-                            <td><input name="txt_kin_mname" id="txt_kin_mname" class="txtbox" value=""  /></td>
+                            <td><?php Form::textbox('txt_kin_mname'); ?></td>
                         </tr>
                         <tr>
                             <td>Surname:</td>
-                            <td><input name="txt_kin_sname" id="txt_kin_sname" class="txtbox" value=""  /></td>
+                            <td><?php Form::textbox('txt_kin_sname'); ?></td>
                         </tr>
                         <tr>
                             <td>Gender:</td>
-                            <td>
-                                <?php
-                                    $gender_arr = '';
-                                    $gender_arr = item_array('gender');
-                                    if ('' != $gender_arr)
-                                    {
-                                        dropdown($gender_arr, 'sel_kin_gender', '', '', 'selbox', '', 'Select:');
-                                    }
-                                ?>
-                            </td>
+                            <td><?php Form::selectbox(item_array('gender'),'sel_kin_gender'); ?></td>
                         </tr>
                         <tr>
                             <td class="percent35" style="vertical-align:top;">Address:</td>
-                            <td>
-                                <textarea name="txta_kin_address" id="txta_kin_address" class="txtbox" rows="3"></textarea>
-                            </td>
+                            <td><?php Form::textarea('txta_kin_address'); ?></td>
                         </tr>
                         <tr>
                             <td>Email:</td>
-                            <td><input name="txt_kin_email" id="txt_kin_email" class="txtbox" value="" /></td>
+                            <td><?php Form::textbox('txt_kin_email'); ?></td>
                         </tr>
                         <tr>
                             <td>Phone Number 1:</td>
-                            <td><input name="txt_kin_phone1" id="txt_kin_phone1" class="txtbox" value="" /></td>
+                            <td><?php Form::textbox('txt_kin_phone1'); ?></td>
                         </tr>
                         <tr>
                             <td>Phone Number 2:</td>
-                            <td><input name="txt_kin_phone2" id="txt_kin_phone2" class="txtbox" value="" /></td>
+                            <td><?php Form::textbox('txt_kin_phone2'); ?></td>
                         </tr>
                         <tr>
                             <td>Relationship:</td>
-                            <td><?php dropdown($relation_arr, 'sel_kin_relate', '', '', 'selbox', '', 'Select:'); ?></td>
+                            <td><?php Form::selectbox($option->dropdown_list('relationship'),'sel_kin_relate'); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -308,37 +222,43 @@
                         <tr>
                             <td class="percent35">Date of Birth:</td>
                             <td>
-                                <table class="invisible_table">
+                                <table class="inner_table">
                                     <tr>
-                                        <td class="percent80" style="padding-left:0;padding-top:0;padding-bottom:0;"><input name="txt_dob" id="txt_dob" class="txtbox" onchange="javascript:$date_engine.get_age(this.value,'#txt_age');" readonly="true" value="" /></td>
-                                        <td style="padding-right:0;padding-top:0;padding-bottom:0;"><input name="txt_age" id="txt_age" class="txtbox" onkeyup="javascript:$date_engine.get_dob(this.value,'#txt_dob');" value="" /></td>
+                                        <td class="percent60">
+                                            <?php
+                                                Form::textbox('txt_dob','',array(
+                                                    'onchange' => "javascript:\$date_engine.get_age(this.value,'#txt_age');",
+                                                    'readonly' => 'true'                                                    
+                                                ));
+                                            ?>
+                                        </td>
+                                        <td class="r_align">Age:</td>                                        
+                                        <td class="r_align percent15">
+                                            <?php
+                                                Form::textbox('txt_age','',array(
+                                                    'onkeyup'  => "javascript:\$date_engine.get_dob(this.value,'#txt_dob');"
+                                                ));
+                                            ?>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
                             <td>Marital Status:</td>
-                            <td>
-                                <?php dropdown($marital_status_arr, 'sel_marital', '', '', 'selbox', '', 'Select:'); ?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('marital_status'),'sel_marital'); ?></td>
                         </tr>
                         <tr>
                             <td>Religion:</td>
-                            <td>
-                                <?php dropdown($religion_arr, 'sel_religion', '', '', 'selbox', '', 'Select:'); ?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('religion'),'sel_religion'); ?></td>
                         </tr>
                         <tr>
                             <td>Occupation:</td>
-                            <td>
-                                <?php dropdown($occupation_arr, 'sel_occupation', '', '', 'selbox', '', 'Select:'); ?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('occupation'),'sel_occupation'); ?></td>
                         </tr>
                         <tr>
                             <td>Country:</td>
-                            <td>
-                                <?php dropdown($country_arr, 'sel_country', '', '', 'selbox', '', 'Select:'); ?>
-                            </td>
+                            <td><?php Form::selectbox($option->dropdown_list('country'),'sel_country'); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -355,7 +275,7 @@
                     <div class="legend">Controls:</div>
                     <table class="visible_table">
                         <tr>
-                            <td colspan="2"><button type="submit">Insert Patient</button></td>
+                            <td colspan="2"><button type="submit">Add Patient</button></td>
                         </tr>
                     </table>
                 </div>
@@ -399,21 +319,21 @@
         // Reset the form field appearance
         $("input, textarea").on('keyup', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("input, textarea").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("select").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
@@ -442,7 +362,7 @@
                 
                 if (($div.prop("validate") == "text") && ($div.prop("value") == ""))
                 {
-                    $div.focus().css({"border":"red solid 2px"});
+                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -463,7 +383,7 @@
                 
                 else if (($div.prop("validate") == "select") && ($div.prop("value") == ""))
                 {
-                    $div.focus().css({"border":"red solid 2px"});
+                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -502,8 +422,8 @@
                         if($json.status == "true")
                         {
                             $ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
-                            $file_loader.load_component('patients/fetch_patient');
-                            $file_loader.load_side_kick('patients/patient_side_menu');
+                            $file_loader.load_component('patients/patient_display');
+                            $file_loader.load_side_kick('patients/patient_menu');
                         }
                         else
                         {
@@ -534,9 +454,9 @@
             
             reader.onload = function(event)
             {
-                imgUrl = event.target.result;
+                img_URL = event.target.result;
                 $("#pix_display").attr({
-                    src: imgUrl,
+                    src: img_URL,
                     width: 100,
                     height: 100
                 });

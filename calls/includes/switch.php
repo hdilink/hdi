@@ -126,16 +126,16 @@
                     
                     if($ext_profile instanceof Ext_Profile)
                     {
-                        $refdoc_arr = $ext_profile->dropdown_list();
+                        $refdoc_arr = $ext_profile->dropdown_list($value);
                     }
                     
                     if (!empty($refdoc_arr))
                     {
-                        dropdown($refdoc_arr, 'sel_extdoc', '', '', 'selbox', '', 'Select:');
+                        Form::selectbox($refdoc_arr,'sel_extdoc');
                     }
                     else
                     {
-                        dropdown('', 'sel_extdoc', '', '', 'selbox', '', 'Select:');
+                        Form::selectbox(array(),'sel_extdoc');
                     }
                 }
             break;
@@ -157,15 +157,16 @@
                         $upload_path              = UPLOADS.DIRECTORY_SEPARATOR."pictures".DIRECTORY_SEPARATOR."thumbs".DIRECTORY_SEPARATOR;
                         $extension                = pathinfo(basename($_FILES['fil_patient_pix']['name']), PATHINFO_EXTENSION);
                         $new_name                 = str_replace('/', '-', $_POST['txt_pid_alias']);
-                        $doc_arr['patient_id']      = $session->get_patient_id();
+                        $doc_arr['patient_id']    = $session->get_patient_id();
                         $doc_arr['filename']      = $new_name.'.'.$extension;
                         $doc_arr['type']          = $_FILES['fil_patient_pix']['type'];
                         $doc_arr['size']          = $_FILES['fil_patient_pix']['size'];
-                        $doc_arr['path']    = THUMB_PATH;
+                        $doc_arr['path']          = THUMB_PATH;
                         $doc_arr['date_created']  = get_current_date();
                         $doc_arr['date_modified'] = get_current_date();
                         
                         $document = new Document($doc_arr);
+                        
                         if($document instanceof Document)
                         {
                             try
@@ -177,10 +178,13 @@
                                 //handle errors
                                 $json['error'] = $e->getMessage();
                             }
+                            
                             $thumb->adaptiveResize(100, 100);
                             $thumb->save($upload_path.$doc_arr['filename']);
+                            
                             // Insert record
                             $inserted = $document->save_document();
+                            
                             if($inserted)
                             {
                                 $json['status'] = 'true';

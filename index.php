@@ -378,10 +378,10 @@
                 <div id="footer">
                     <div class="div100">
                         <div class="signature percent65">
-                            <h4 class="coy_color">Hope+lus Ltd.</h4>
+                            <h4 class="coy_color">Codefully Ltd.</h4>
                             <div class="pad5px">
                                 <b>Head Office:</b>
-                                Hope+lus Ltd.
+                                Codefully Ltd.
                             </div>
                             <div class="pad5px">
                                 14c, Estaport Avenue,
@@ -424,7 +424,7 @@
                 
                 <div class="pad10px copyright_belt_bg">
                     <div class="copyright_belt font12" style="color: #888;">
-                        &copy; Copyright <?php echo date('Y'); ?>. <span class="white bold text_shadow font14">Hope+lus Ltd.</span> | All rights reserved.
+                        &copy; Copyright <?php echo date('Y'); ?>. <span class="white bold text_shadow font14">Codefully Ltd.</span> | All rights reserved.
                     </div>
                 </div>
             <!-- footer_bg END -->

@@ -1,17 +1,18 @@
+<?php require_once( '..'.DIRECTORY_SEPARATOR.'init.php' ); ?>
 <div class="sub_wrapper">
     <div class="sub_menu patient">
         
         <div class="l_float percent15">
             <ul>
                 <li class="percent100">
-                    <a href="javascript:new_patient();" title="New Patient" style="padding-left: 25px;">
-                        <table>
+                    <a href="javascript:new_patient();" title="Add Patient" style="padding-left: 25px;">
+                        <table class="inner_table">
                             <tr>
-                                <td style="vertical-align: middle;">
+                                <td style="width:32px;">
                                     <span class="sub_menu32x32" style="background-position: 0 -32px;">&nbsp;</span>
                                 </td>
-                                <td style="vertical-align: middle;">
-                                    New Patient
+                                <td>
+                                    Add Patient
                                 </td>
                             </tr>
                         </table>
@@ -23,9 +24,9 @@
         <div class="l_float" style="margin-left: -1px;">
             <ul>
                 <li>
-                    <table>
+                    <table class="inner_table">
                         <tr>
-                            <td style="vertical-align: middle;">
+                            <td style="width:2px;">
                                 <span class="sub_menu32x32" style="background-position: center -256px; width: 2px;">&nbsp;</span>
                             </td>
                         </tr>
@@ -33,12 +34,12 @@
                 </li>
                 <li>
                     <a href="javascript:edit_patient();" title="Edit Patient">
-                        <table>
+                        <table class="inner_table">
                             <tr>
-                                <td style="vertical-align: middle;">
+                                <td style="width:32px;">
                                     <span class="sub_menu32x32" style="background-position: 0 -96px;">&nbsp;</span>
                                 </td>
-                                <td style="vertical-align: middle;">
+                                <td>
                                     Edit Patient
                                 </td>
                             </tr>
@@ -46,13 +47,34 @@
                     </a>
                 </li>
                 <li>
+                    <table class="inner_table">
+                        <tr>
+                            <td>
+                                <a href="javascript:forward_patient();" title="Forward Patient">
+                                    <table class="inner_table">
+                                        <td style="width:32px;">
+                                            <span class="sub_menu32x32" style="background-position: 0 -320px;">&nbsp;</span>
+                                        </td>
+                                        <td>
+                                            Forward Patient
+                                        </td>
+                                    </table>
+                                </a>
+                            </td>
+                            <td>
+                                <?php Form::selectbox(array(),'sel_pool'); ?>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li>
                     <a href="#" title="Delete Patient">
-                        <table>
+                        <table class="inner_table">
                             <tr>
-                                <td style="vertical-align: middle;">
+                                <td style="width:32px;">
                                     <span class="sub_menu32x32" style="background-position: 0 -160px;">&nbsp;</span>
                                 </td>
-                                <td style="vertical-align: middle;">
+                                <td>
                                     Delete Patient
                                 </td>
                             </tr>
@@ -60,22 +82,22 @@
                     </a>
                 </li>
                 <li>
-                    <table>
+                    <table class="inner_table">
                         <tr>
-                            <td style="vertical-align: middle;">
+                            <td style="width:2px;">
                                 <span class="sub_menu32x32" style="background-position: center -256px; width: 2px;">&nbsp;</span>
                             </td>
                         </tr>
                     </table>
                 </li>
                 <li>
-                    <table>
+                    <table class="inner_table" style="padding: 0 10px;">
                         <tr>
-                            <td style="vertical-align: middle; padding-left: 10px;">
-                                <input name="alias_search" id="alias_search" class="txtbox" />
+                            <td>
+                                <?php Form::textbox('alias_search'); ?>
                             </td>
-                            <td style="vertical-align: middle; padding-right: 10px;">
-                                <a href="javascript:alias_search();" id="alias_search_btn" title="Search Patient" style="padding: 0;">
+                            <td style="width:32px;">
+                                <a href="javascript:alias_search();" id="alias_search_btn" title="Search Patient" style="padding:0;">
                                     <span class="sub_menu32x32" style="background-position: 0 -224px;">&nbsp;</span>
                                 </a>
                             </td>
@@ -120,14 +142,14 @@
     {
         // .sub_menu bar display
         $('.patient a').on('mouseover', function(){
-            $(this).css('color','#000');
+            //$(this).css('color','#000');
             var $span   = $(this).find('span'),
                 $bg_pos = $span.css('backgroundPosition').split(" "),
                 $y_pos  = parseInt($bg_pos[1]) + 32;
                 $span.css('background-position', $bg_pos[0] + ' ' + $y_pos + 'px');
         });
         $('.patient a').on('mouseout', function(){
-            $(this).css('color','#777');
+            //$(this).css('color','#777');
             var $span   = $(this).find('span'),
                 $bg_pos = $span.css('backgroundPosition').split(" "),
                 $y_pos  = parseInt($bg_pos[1]) - 32;
@@ -142,13 +164,15 @@
             
             if ($search.val() == '')
             {
-                $search.css({'border-color':'red'});
-                $search.focus();
+                $search.focus().parent("div.outer_box").css({'border-color':'red'});
+            } else {
+                $search.focus().parent("div.outer_box").css({'border-color':'#ccc'});
             }
         })
         
-        // Load the Side kick
-        $file_loader.load_side_kick('patients/default_side_menu');
+        // Load the Left/Right Menu
+        $file_loader.load_side_kick('patients/menu_left');
+        $file_loader.load_tips('patients/menu_right');
         
         // Balance the height
         $init.height_balance();
@@ -172,8 +196,8 @@
                     if($json.status == "true")
                     {
                         //$ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
-                        $file_loader.load_component('patients/fetch_patient');
-                        $file_loader.load_side_kick('patients/patient_side_menu');
+                        $file_loader.load_component('patients/patient_display');
+                        $file_loader.load_side_kick('patients/patient_menu');
                     }else{
                         $ui_engine.block({title:'Alert!',file:'alert_failure',width:'200',height:'120',buttons:'NNY'});
                     }
@@ -181,7 +205,7 @@
                 error: function(request, status, error)
                 {
                     //alert(request.responseText);
-                    $('#login_msg').html("<span class='red_bg white msg'><b>LOGIN ERROR:</b> Please, Try Again.</span>");
+                    $ui_engine.block({title:'Alert!',file:'alert_failure',width:'200',height:'120',buttons:'NNY'});
                 }
             });
         }
@@ -190,14 +214,14 @@
     // Set the interface to accept new Patient details
     new_patient = function()
     {
-        $file_loader.load_component('patients/new_patient');
-        $file_loader.load_side_kick('patients/default_side_menu');
+        $file_loader.load_component('patients/patient_add');
+        $file_loader.load_side_kick('patients/menu_left');
     }
     
     // Set the interface to edit existing Patient details
     edit_patient = function()
     {
-        $file_loader.load_component('patients/edit_patient');
-        $file_loader.load_side_kick('patients/default_side_menu');
+        $file_loader.load_component('patients/patient_edit');
+        $file_loader.load_side_kick('patients/patient_menu');
     }
 </script>

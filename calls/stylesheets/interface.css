@@ -728,6 +728,6 @@ button, input[type="button"], input[type="submit"], input[type="reset"]
 }
         
 /* Theming */
-.coy_color, .tablets .tablet li a:hover, .tab .ui-state-active a, .tab .ui-state-active a:link, .tab .ui-state-active a:visited {color: yellowgreen;}
-.coy_bg, .ui-tabs .ui-tabs-nav, button, input[type="button"], input[type="submit"], input[type="reset"] {background-color: yellowgreen;}
-.coy_border, .ui-tabs .ui-tabs-panel {border:1px solid yellowgreen;}
+.coy_color, .tablets .tablet li a:hover, .tab .ui-state-active a, .tab .ui-state-active a:link, .tab .ui-state-active a:visited {color: #39c;}
+.coy_bg, .ui-tabs .ui-tabs-nav, button, input[type="button"], input[type="submit"], input[type="reset"] {background-color: #39c;}
+.coy_border, .ui-tabs .ui-tabs-panel {border:1px solid #39c;}

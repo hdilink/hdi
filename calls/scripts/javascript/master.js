@@ -56,8 +56,8 @@ $(document).ready(function()
     
     // Array build for default tabs
     var $tab_arr =  [
-                        {"title":"patients","file":"patients"},
-                        {"title":"day sheet","file":"day_sheet"}
+                        {"title":"patients","file":"patients"}//,
+                        //{"title":"day sheet","file":"day_sheet"}
                     ];
                     
     // Launch default tabs
