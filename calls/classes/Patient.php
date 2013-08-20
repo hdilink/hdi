@@ -337,15 +337,11 @@ class Patient
                        p.middle_name, p.surname, p.gender, p.address, p.email, p.phone_1, p.phone_2, p.date_of_birth,
                        p.marital_status, p.religion, p.occupation, p.patient_type, p.blood_type, p.rh, p.account_status,
                        p.assigned_doctor_id, p.country, p.ref_hospital_id, p.ref_doctor_id, k.first_name AS kin_first_name,
-                       k.middle_name AS kin_middle_name, k.surname AS kin_surname, k.gender AS kin_gender, k.address AS kin_address, k.email AS kin_email, k.phone_1 AS kin_phone_1, k.phone_2 AS kin_phone_2, k.relationship,
-                       d.document_id, d.filename, d.path
+                       k.middle_name AS kin_middle_name, k.surname AS kin_surname, k.gender AS kin_gender, k.address AS kin_address, k.email AS kin_email, k.phone_1 AS kin_phone_1, k.phone_2 AS kin_phone_2, k.relationship
                 FROM patients p
                 INNER JOIN kinships k
                 ON p.patient_id=k.patient_id
-                INNER JOIN documents d
-                ON p.patient_id=d.patient_id
                 WHERE p.patient_id={$id}
-                AND d.type LIKE '%image/%'
                 LIMIT 1
                 ";
         

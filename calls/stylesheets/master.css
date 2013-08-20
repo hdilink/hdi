@@ -550,7 +550,7 @@ body{
             .sub_content {
                 background-color: #FFF;
             }
-                .side_kick {
+                .left_pane {
                     /*background: #F9F9F9 url(../images/left_nav_bg.png) right repeat-y;*/
                     background: #F9F9F9 url(../images/dot1px.gif) right repeat-y;
                     float: left;
@@ -559,15 +559,15 @@ body{
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
-                    .side_kick > div {
+                    .left_pane > div {
                         /*border-right: #999 solid 1px;*/
                         height: inherit;
                     }
-                        .side_kick li {
+                        .left_pane li {
                             list-style: none;
                             display: block;
                         }
-                            .side_kick li a{
+                            .left_pane li a{
                                 padding: 7px 20px 7px 30px;
                                 display: block;
                                 color: #333;
@@ -578,12 +578,12 @@ body{
                                 -webkit-text-shadow: #FFF 1px 1px;
                                 -khtml-text-shadow: #FFF 1px 1px;
                             }
-                            .side_kick li a:hover{
+                            .left_pane li a:hover{
                                 background-color: #eee;
                                 /*background: #EEE url(../images/left_nav_bg.png) right repeat-y;*/
                                 background: #eee url(../images/dot1px.gif) right repeat-y;
                             }
-                .component {
+                .middle_pane {
                     width: 70%;
                     float: left;
                     border-bottom: #999 solid 1px;
@@ -591,7 +591,7 @@ body{
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
-                .tips {
+                .right_pane {
                     /*background: #F9F9F9 url(../images/right_nav_bg.png) left repeat-y;*/
                     background: #F9F9F9 url(../images/dot1px.gif) left repeat-y;
                     width: 15%;
@@ -600,7 +600,7 @@ body{
                     overflow-y: auto;
                     overflow-x: hidden;
                 }
-                    .tips > div {
+                    .right_pane > div {
                         /*border-left: #999 solid 1px;*/
                         height: inherit;
                     }

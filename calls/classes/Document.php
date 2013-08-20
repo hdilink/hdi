@@ -9,7 +9,7 @@
  * @author HDI
  * @copyright 2013
  * @version $Id$
- * @access public
+ * @access Public
  */
 Class Document
 {
@@ -27,11 +27,13 @@ Class Document
      * @param mixed $arr
      * @return void
      */
-    public function __construct($arr=array())
+    public function __construct($arr = array())
     {
         $this->database_obj   = Database::obj();
         
-        $this->document_id    = isset($arr['document_id']) ? $arr['document_id']: '';
+        self::initialize($arr);
+        
+        /*$this->document_id    = isset($arr['document_id']) ? $arr['document_id']: '';
         $this->patient_id     = isset($arr['patient_id']) ? $arr['patient_id']: '';
         $this->int_profile_id = isset($arr['int_profile_id']) ? $arr['int_profile_id']: '';
         $this->ext_profile_id = isset($arr['ext_profile_id']) ? $arr['ext_profile_id']: '';
@@ -40,7 +42,7 @@ Class Document
         $this->size           = isset($arr['size']) ? $arr['size']: '';
         $this->path           = isset($arr['path']) ? $arr['path']: '';
         $this->date_created   = isset($arr['date_created']) ? $arr['date_created']: '';
-        $this->date_modified  = isset($arr['date_modified']) ? $arr['date_modified']: '';
+        $this->date_modified  = isset($arr['date_modified']) ? $arr['date_modified']: '';*/
     }    
     
     /**
@@ -57,6 +59,8 @@ Class Document
         $sql    = (isset($args['select'])) ? " SELECT {$args['select']} "  : '';
         $sql   .= (isset($args['from']))   ? " FROM {$args['from']} "      : '';
         $sql   .= (isset($args['where']))  ? " WHERE {$args['where']} "    : '';
+        $sql   .= (isset($args['and']))    ? " AND {$args['and']} "        : '';
+        $sql   .= (isset($args['like']))    ? " LIKE {$args['like']} "        : '';
         $sql   .= (isset($args['group']))  ? " GROUP BY {$args['group']} " : '';
         $sql   .= (isset($args['order']))  ? " ORDER BY {$args['order']} " : '';
         $sql   .= (isset($args['limit']))  ? " LIMIT {$args['limit']} "    : '';
@@ -122,6 +126,100 @@ Class Document
     }
     
     /**
+     * Document::fetch_thumb_by_patient_id()
+     * 
+     * @param mixed $patient_id
+     * @return Returns a thumbnail with a specified Patient ID
+     */
+    public function fetch_thumb_by_patient_id($patient_id)
+    {
+        // Execute query
+        $query = $this->query(array(
+            'select' => "*",
+            'from'   => self::$table_name,
+            'where'  => "patient_id={$patient_id}",
+            'and'    => "type",
+            'like'   => "'%image/%'",
+            'limit'  => "1",
+            'format' => 'Object'
+        ));
+        
+        // Result
+        return $query;
+    }
+    
+    /**
+     * Document::fetch_thumb_by_int_profile_id()
+     * 
+     * @param mixed $int_profile_id
+     * @return Returns a thumbnail with a specified Internal Profile ID
+     */
+    public function fetch_thumb_by_int_profile_id($int_profile_id)
+    {
+        // Execute query
+        $query = $this->query(array(
+            'select' => "*",
+            'from'   => self::$table_name,
+            'where'  => "int_profile_id={$int_profile_id}",
+            'and'    => "type",
+            'like'   => "'%image/%'",
+            'limit'  => "1",
+            'format' => 'Object'
+        ));
+        
+        // Result
+        return $query;
+    }
+    
+    /**
+     * Document::fetch_thumb_by_ext_profile_id()
+     * 
+     * @param mixed $ext_profile_id
+     * @return Returns a thumbnail with a specified External Profile ID
+     */
+    public function fetch_thumb_by_ext_profile_id($ext_profile_id)
+    {
+        // Execute query
+        $query = $this->query(array(
+            'select' => "*",
+            'from'   => self::$table_name,
+            'where'  => "ext_profile_id={$ext_profile_id}",
+            'and'    => "type",
+            'like'   => "'%image/%'",
+            'limit'  => "1",
+            'format' => 'Object'
+        ));
+        
+        // Result
+        return $query;
+    }
+    
+    /**
+     * Document::initialize()
+     * 
+     * Initializes class attributes
+     * 
+     * @param mixed $args
+     * @return void
+     */
+    private function initialize($args = array())
+    {
+        // Builds all args into their corresponding Class properties   
+        foreach($args as $key => $val)
+        {
+            if(property_exists($this, $key))
+            {
+                // Will only accept keys that have been explicitly defined as Class property
+                if(isset($key))
+                {
+                    $this->{$key} = $val;
+                }
+            }
+        }
+        
+    }
+    
+    /**
      * Documents::insert_document()
      * 
      * Returns last inserted id          
@@ -129,7 +227,9 @@ Class Document
      * @return
      */                      
     public function save_document()
-    {                  
+    {       
+        //if()
+        //{
             // SQL
             $sql = " INSERT INTO ".self::$table_name." (patient_id, filename, type, size, path, date_created, date_modified)
                      VALUES (:patient_id, :filename, :type, :size, :path, :date_created, :date_modified) ";
@@ -147,11 +247,6 @@ Class Document
             
             // Execute
             return  $this->database_obj->execute_query($sql,'',$bind_array);
-            
-            /*if ($is_inserted)
-            {
-                return $this->database_obj->last_insert_id();
-            }*/ 
         /*} else {
             
             // SQL
@@ -207,5 +302,6 @@ Class Document
             }*/                   
         //}
     }
+    
 } 
 ?>

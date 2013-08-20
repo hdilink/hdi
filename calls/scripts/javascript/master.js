@@ -163,7 +163,7 @@ var $init =
             $height        = $win_height - $footer_height - $div_offset;
         
         // Reset Standard heights        
-        $( ".side_kick, .component, .tips" ).height( $height - 44 ); // Actually, I don't know where this 44 came from :(
+        $( ".left_pane, .middle_pane, .right_pane" ).height( $height - 44 ); // Actually, I don't know where this 44 came from :(
     },
     
     default_tabs: function($tab_arr)
@@ -779,7 +779,7 @@ $file_loader =
         $( $href + " > .sub_wrapper .sub_content"  ).load( $file_url );
     },
     
-    load_side_kick: function($file)
+    load_left_pane: function($file)
     {
         var
             // Fetch the "href" of the current active tab
@@ -789,10 +789,10 @@ $file_loader =
             $file_url = '../calls/includes/tabs/' + $file + '.php';
             
             // Load Side Kick
-            $( $href + " > .sub_wrapper .side_kick"  ).load( $file_url );
+            $( $href + " > .sub_wrapper .left_pane"  ).load( $file_url );
     },
     
-    load_component: function($file)
+    load_middle_pane: function($file)
     {
         var
             // Fetch the "href" of the current active tab
@@ -801,11 +801,11 @@ $file_loader =
             // External file
             $file_url = '../calls/includes/tabs/' + $file + '.php';
             
-        // Load Component
-        $( $href + " > .sub_wrapper .component"  ).load( $file_url );
+        // Load Middle Pane
+        $( $href + " > .sub_wrapper .middle_pane"  ).load( $file_url );
     },
     
-    load_tips: function($file)
+    load_right_pane: function($file)
     {
         var
             // Fetch the "href" of the current active tab
@@ -814,8 +814,8 @@ $file_loader =
             // External file
             $file_url = '../calls/includes/tabs/' + $file + '.php';
             
-        // Load Tips
-        $( $href + " > .sub_wrapper .tips"  ).load( $file_url );
+        // Load Right Pane
+        $( $href + " > .sub_wrapper .right_pane"  ).load( $file_url );
     }
 }
 

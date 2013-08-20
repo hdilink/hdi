@@ -9,6 +9,7 @@
     $ext_profile = new Ext_Profile();
     $hospital    = new Hospital();
     $option      = new Option();
+    $document    = new Document(array());
     
     // Init.
     $title          = '';
@@ -44,9 +45,6 @@
     $religion       = '';
     $occupation     = '';
     $country        = '';
-    $document_id    = '';
-    $filename       = '';
-    $path           = '';
     
     if ($patient instanceof Patient)
     {
@@ -92,9 +90,6 @@
             $religion           = $patient_arr[0]['religion'];
             $occupation         = $patient_arr[0]['occupation'];
             $country            = $patient_arr[0]['country'];
-            $document_id        = $patient_arr[0]['document_id'];
-            $filename           = $patient_arr[0]['filename'];
-            $path               = $patient_arr[0]['path'];
         }
     }
 ?>
@@ -141,10 +136,20 @@
                             <td style="padding-right:15px;">
                                 <div>
                                     <div style='height:0px;width:0px;overflow:hidden;'><input type="file" name="fil_patient_pix" id="fil_patient_pix" onchange="javascript:$process_uploader();" accept="image/*" /></div>
-                                    <button type="button" name="btn_patient_pix" id="btn_patient_pix" class="btn_pix rnd_oooo"><img id="pix_display" src="<?php echo $path.$filename ?>" class="rnd_oooo" /></button>
-                                    <img id="img_loader" style="position: absolute; top: 40px; left: 40px; display: none;" src="../calls/images/loader.gif" />
-                                </div>
-                                <input type="hidden" name="document_id" id="document_id" value="<?php echo $document_id; ?>" />
+                                    <button type="button" name="btn_patient_pix" id="btn_patient_pix" class="btn_pix rnd_oooo">
+                                        <?php
+                                            if($document instanceof Document)
+                                            {
+                                                $document_obj = $document->fetch_thumb_by_patient_id($pid);
+                                                if(!empty($document_obj))
+                                                {
+                                                    echo '<img id="pix_display" src="'.$document_obj{0}->path.$document_obj{0}->filename.'" data="'.$document_obj{0}->document_id.'" class="rnd_oooo" width="100px" alt="" />';
+                                                }else{
+                                                    echo '<img id="pix_display" src="../calls/images/patients/sample.jpg" class="rnd_oooo" width="100px" alt="" />';
+                                                }
+                                            }
+                                        ?>
+                                    </button>
                             </td>
                             <td class="percent100" style="vertical-align:top;">
                                 <table class="visible_table">
@@ -433,21 +438,21 @@
         // Reset the form field appearance
         $("input, textarea").on('keyup', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("input, textarea").on('change', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("select").on('change', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
@@ -476,7 +481,7 @@
                 
                 if (($div.prop("validate") == "text") && ($div.prop("value") == ""))
                 {
-                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
+                    $div.focus().css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -497,7 +502,7 @@
                 
                 else if (($div.prop("validate") == "select") && ($div.prop("value") == ""))
                 {
-                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
+                    $div.focus().css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -535,8 +540,8 @@
                         if($json.status == "true")
                         {
                             $ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
-                            $file_loader.load_component('patients/patient_display');
-                            $file_loader.load_side_kick('patients/patient_menu');
+                            $file_loader.load_middle_pane('patients/patient_display');
+                            $file_loader.load_left_pane('patients/menu_right');
                         }
                         else
                         {

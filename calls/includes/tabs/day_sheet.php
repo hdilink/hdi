@@ -30,7 +30,7 @@
     </div>
     
     <div class="sub_content">
-        <div class="side_kick">
+        <div class="left_pane">
             <div>
                 <ul>
                     <li><a href="#">Today</a></li>
@@ -41,16 +41,16 @@
                 </ul>
             </div>
         </div>
-        <div class="component">
+        <div class="middle_pane">
             <div class="outter_pad">
                 <div class="inner_pad">
-                     This is the Day Sheet Interface
+                     This is the Sample Interface
                 </div>
                 
                 <div class="clear"></div>
             </div>
         </div>
-        <div class="tips">
+        <div class="right_pane">
             <div>
                 &nbsp;
             </div>

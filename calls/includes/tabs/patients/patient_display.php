@@ -5,9 +5,10 @@
     // Class instances
     $session = new Session();
     $patient = new Patient();
+    $document = new Document(array());
     
     // Init.
-    $title = $fname = $mname = $sname = $gender = $pid_alias = $last_visit = $visist_count = $address = $email = $phone1 = $phone2 = $ptype = $intdoc = $bloodtype = $rh = $refhospital = $extdoc = $status = $kin_fname = $kin_mname = $kin_sname = $kin_gender = $kin_address = $kin_email = $kin_phone1 = $kin_phone2 = $kin_relate = $dob = $marital = $religion = $occupation = $country = $document_id = $filename = $path = '';
+    $title = $fname = $mname = $sname = $gender = $pid_alias = $last_visit = $visist_count = $address = $email = $phone1 = $phone2 = $ptype = $intdoc = $bloodtype = $rh = $refhospital = $extdoc = $status = $kin_fname = $kin_mname = $kin_sname = $kin_gender = $kin_address = $kin_email = $kin_phone1 = $kin_phone2 = $kin_relate = $dob = $marital = $religion = $occupation = $country = '';
     
     if ($patient instanceof Patient)
     {
@@ -53,9 +54,6 @@
             $religion     = $patient_arr[0]['religion'];
             $occupation   = $patient_arr[0]['occupation'];
             $country      = $patient_arr[0]['country'];
-            $document_id  = $patient_arr[0]['document_id'];
-            $filename     = $patient_arr[0]['filename'];
-            $path         = $patient_arr[0]['path'];
         }
     }
 ?>
@@ -98,7 +96,18 @@
                     <tr>
                         <td style="padding-right:15px;">
                             <div>
-                                <img src="<?php echo $path.$filename; ?>" class="rnd_oooo" width="100px" alt="" />
+                                <?php
+                                    if($document instanceof Document)
+                                    {
+                                        $document_obj = $document->fetch_thumb_by_patient_id($pid);
+                                        if(!empty($document_obj))
+                                        {
+                                            echo '<img src="'.$document_obj{0}->path.$document_obj{0}->filename.'" class="rnd_oooo" width="100px" alt="" />';
+                                        }else{
+                                            echo '<img src="../calls/images/patients/sample.jpg" class="rnd_oooo" width="100px" alt="" />';
+                                        }
+                                    }
+                                ?>
                             </div>
                         </td>
                         <td class="percent100" style="vertical-align:top;">

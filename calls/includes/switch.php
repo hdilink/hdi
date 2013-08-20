@@ -152,44 +152,44 @@
                     
                     if($status)
                     {
-                        // Session instance
-                        $session = new Session();
-                        $upload_path              = UPLOADS.DIRECTORY_SEPARATOR."pictures".DIRECTORY_SEPARATOR."thumbs".DIRECTORY_SEPARATOR;
-                        $extension                = pathinfo(basename($_FILES['fil_patient_pix']['name']), PATHINFO_EXTENSION);
-                        $new_name                 = str_replace('/', '-', $_POST['txt_pid_alias']);
-                        $doc_arr['patient_id']    = $session->get_patient_id();
-                        $doc_arr['filename']      = $new_name.'.'.$extension;
-                        $doc_arr['type']          = $_FILES['fil_patient_pix']['type'];
-                        $doc_arr['size']          = $_FILES['fil_patient_pix']['size'];
-                        $doc_arr['path']          = THUMB_PATH;
-                        $doc_arr['date_created']  = get_current_date();
-                        $doc_arr['date_modified'] = get_current_date();
-                        
-                        $document = new Document($doc_arr);
-                        
-                        if($document instanceof Document)
+                        if(!empty($_FILES['fil_patient_pix']['name']))
                         {
-                            try
+                            if ($_FILES['fil_patient_pix']['error'] === UPLOAD_ERR_OK)
                             {
-                                $thumb = PhpThumbFactory::create($_FILES['fil_patient_pix']['tmp_name']);
-                            }
-                            catch (Exception $e)
-                            {
-                                //handle errors
-                                $json['error'] = $e->getMessage();
-                            }
-                            
-                            $thumb->adaptiveResize(100, 100);
-                            $thumb->save($upload_path.$doc_arr['filename']);
-                            
-                            // Insert record
-                            $inserted = $document->save_document();
-                            
-                            if($inserted)
-                            {
-                                $json['status'] = 'true';
+                                // Session instance
+                                $session = new Session();
+                                $thumb   = "";
+                                $upload_path              = UPLOADS.DIRECTORY_SEPARATOR."pictures".DIRECTORY_SEPARATOR."thumbs".DIRECTORY_SEPARATOR;
+                                $extension                = pathinfo(basename($_FILES['fil_patient_pix']['name']), PATHINFO_EXTENSION);
+                                $new_name                 = str_replace('/', '-', $_POST['txt_pid_alias']);
+                                $doc_arr['patient_id']      = $session->get_patient_id();
+                                $doc_arr['filename']      = $new_name.'.'.$extension;
+                                $doc_arr['type']          = $_FILES['fil_patient_pix']['type'];
+                                $doc_arr['size']          = $_FILES['fil_patient_pix']['size'];
+                                $doc_arr['path']    = THUMB_PATH;
+                                $doc_arr['date_created']  = get_current_date();
+                                $doc_arr['date_modified'] = get_current_date();
+                                
+                                $document = new Document($doc_arr);
+                                if($document instanceof Document)
+                                {
+                                    try
+                                    {
+                                        $thumb = PhpThumbFactory::create($_FILES['fil_patient_pix']['tmp_name']);
+                                    }
+                                    catch (Exception $e)
+                                    {
+                                        //handle errors
+                                        $json['error'] = $e->getMessage();
+                                    }
+                                    $thumb->adaptiveResize(100, 100);
+                                    $thumb->save($upload_path.$doc_arr['filename']);
+                                    // Insert record
+                                    $document->save_document();
+                                }
                             }
                         }
+                        $json['status'] = 'true';
                     }
                     else
                     {

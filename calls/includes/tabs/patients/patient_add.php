@@ -319,21 +319,21 @@
         // Reset the form field appearance
         $("input, textarea").on('keyup', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("input, textarea").on('change', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("select").on('change', function()
         {
-            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
+            $(this).css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
@@ -362,7 +362,7 @@
                 
                 if (($div.prop("validate") == "text") && ($div.prop("value") == ""))
                 {
-                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
+                    $div.focus().css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -383,7 +383,7 @@
                 
                 else if (($div.prop("validate") == "select") && ($div.prop("value") == ""))
                 {
-                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
+                    $div.focus().css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -422,8 +422,8 @@
                         if($json.status == "true")
                         {
                             $ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
-                            $file_loader.load_component('patients/patient_display');
-                            $file_loader.load_side_kick('patients/patient_menu');
+                            $file_loader.load_middle_pane('patients/patient_display');
+                            $file_loader.load_left_pane('patients/menu_right');
                         }
                         else
                         {
@@ -454,9 +454,9 @@
             
             reader.onload = function(event)
             {
-                img_URL = event.target.result;
+                imgUrl = event.target.result;
                 $("#pix_display").attr({
-                    src: img_URL,
+                    src: imgUrl,
                     width: 100,
                     height: 100
                 });

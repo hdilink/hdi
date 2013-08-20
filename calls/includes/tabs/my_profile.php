@@ -62,8 +62,9 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        // Load the Side kick
+        // Load the Left/Right Menu
         $file_loader.load_left_pane('general_settings/default_side_menu');
+        $file_loader.load_right_pane('patients/menu_right');
         
         // Balance the height
         $init.height_balance();

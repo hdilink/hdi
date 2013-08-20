@@ -111,7 +111,7 @@
     </div>
     
     <div class="sub_content">
-        <div class="side_kick">
+        <div class="left_pane">
             <div>
                 <ul>
                     <li><a href="#">Today</a></li>
@@ -122,14 +122,16 @@
                 </ul>
             </div>
         </div>
-        <div class="component">
+        <div class="middle_pane">
+            <div class="outter_pad">
                 <div class="inner_pad">
-                    This is the Patients Interface
+                     This is the Sample Interface
                 </div>
                 
                 <div class="clear"></div>
+            </div>
         </div>
-        <div class="tips">
+        <div class="right_pane">
             <div>
                 &nbsp;
             </div>
@@ -171,8 +173,8 @@
         })
         
         // Load the Left/Right Menu
-        $file_loader.load_side_kick('patients/menu_left');
-        $file_loader.load_tips('patients/menu_right');
+        $file_loader.load_left_pane('patients/menu_left');
+        $file_loader.load_right_pane('patients/menu_right');
         
         // Balance the height
         $init.height_balance();
@@ -196,8 +198,8 @@
                     if($json.status == "true")
                     {
                         //$ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
-                        $file_loader.load_component('patients/patient_display');
-                        $file_loader.load_side_kick('patients/patient_menu');
+                        $file_loader.load_middle_pane('patients/patient_display');
+                        $file_loader.load_left_pane('patients/patient_menu');
                     }else{
                         $ui_engine.block({title:'Alert!',file:'alert_failure',width:'200',height:'120',buttons:'NNY'});
                     }
@@ -214,14 +216,14 @@
     // Set the interface to accept new Patient details
     new_patient = function()
     {
-        $file_loader.load_component('patients/patient_add');
-        $file_loader.load_side_kick('patients/menu_left');
+        $file_loader.load_middle_pane('patients/patient_add');
+        $file_loader.load_left_pane('patients/menu_left');
     }
     
     // Set the interface to edit existing Patient details
     edit_patient = function()
     {
-        $file_loader.load_component('patients/patient_edit');
-        $file_loader.load_side_kick('patients/patient_menu');
+        $file_loader.load_middle_pane('patients/patient_edit');
+        $file_loader.load_left_pane('patients/patient_menu');
     }
 </script>
