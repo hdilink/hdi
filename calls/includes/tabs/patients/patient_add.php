@@ -319,21 +319,21 @@
         // Reset the form field appearance
         $("input, textarea").on('keyup', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("input, textarea").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("select").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
@@ -362,7 +362,7 @@
                 
                 if (($div.prop("validate") == "text") && ($div.prop("value") == ""))
                 {
-                    $div.focus().css({"border":"red solid 2px"});
+                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
@@ -383,7 +383,7 @@
                 
                 else if (($div.prop("validate") == "select") && ($div.prop("value") == ""))
                 {
-                    $div.focus().css({"border":"red solid 2px"});
+                    $div.focus().parent("div.outer_box").css({"border":"red solid 2px"});
                     
                     var $div_top  = $div.position().top + $div.height() + 18,
                         $div_left = $div.position().left - 100;
