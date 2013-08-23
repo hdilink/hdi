@@ -1,4 +1,10 @@
-<?php require_once( '..'.DIRECTORY_SEPARATOR.'init.php' ); ?>
+<?php 
+    require_once( '..'.DIRECTORY_SEPARATOR.'init.php' );
+    require_once( '..'.DIRECTORY_SEPARATOR.'functions.php' );
+    
+    // Class instances
+    $option      = new Option(); 
+?>
 <div class="sub_wrapper">
     <div class="sub_menu patient">
         
@@ -62,7 +68,7 @@
                                 </a>
                             </td>
                             <td>
-                                <?php Form::selectbox(array(),'sel_pool'); ?>
+                                <?php Form::selectbox($option->dropdown_list('department'),'sel_pool', 'Select:'); ?>
                             </td>
                         </tr>
                     </table>

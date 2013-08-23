@@ -438,21 +438,21 @@
         // Reset the form field appearance
         $("input, textarea").on('keyup', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("input, textarea").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
         });
         $("select").on('change', function()
         {
-            $(this).css({"border":"#CCC solid 1px"});
+            $(this).parent("div.outer_box").css({"border":"#CCC solid 1px"});
             
             // Switch-off the tooltip
             $validator.hide_tooltip();
@@ -541,7 +541,7 @@
                         {
                             $ui_engine.block({title:'Alert!',file:'alert_successful',width:'200',height:'120',buttons:'NNY'});
                             $file_loader.load_middle_pane('patients/patient_display');
-                            $file_loader.load_left_pane('patients/menu_right');
+                            $file_loader.load_left_pane('patients/menu_left');
                         }
                         else
                         {

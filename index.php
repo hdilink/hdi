@@ -384,8 +384,8 @@
                                 Codefully Ltd.
                             </div>
                             <div class="pad5px">
-                                14c, Estaport Avenue,
-                                Soluyi, Gbagada,
+                                14, Moses Soefun Street,
+                                Adekoya Estate, <br />Ifako-Ijaiye,
                                 Lagos.
                             </div>
                         </div>
