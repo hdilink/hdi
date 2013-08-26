@@ -102,7 +102,7 @@
                                         $document_obj = $document->fetch_thumb_by_patient_id($pid);
                                         if(!empty($document_obj))
                                         {
-                                            echo '<img src="'.$document_obj{0}->path.$document_obj{0}->filename.'" class="rnd_oooo" width="100px" alt="" />';
+                                            echo '<img src="'.$document_obj->path.$document_obj->filename.'" class="rnd_oooo" width="100px" alt="" />';
                                         }else{
                                             echo '<img src="../calls/images/patients/sample.jpg" class="rnd_oooo" width="100px" alt="" />';
                                         }

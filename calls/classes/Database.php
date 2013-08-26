@@ -1,4 +1,13 @@
 <?php
+/**
+ * Database
+ * 
+ * @package HDI
+ * @author HDI
+ * @copyright 2013
+ * @version $Id$
+ * @access public
+ */
 class Database 
 {
     private static $instance = NULL;

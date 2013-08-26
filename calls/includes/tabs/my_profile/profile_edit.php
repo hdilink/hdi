@@ -4,92 +4,47 @@
     
     // Class instances
     $session     = new Session();
-    $patient     = new Patient();
     $int_profile = new Int_Profile();
-    $ext_profile = new Ext_Profile();
-    $hospital    = new Hospital();
     $option      = new Option();
     $document    = new Document(array());
     
     // Init.
-    $title          = '';
-    $fname          = '';
-    $mname          = '';
-    $sname          = '';
-    $gender         = '';
-    $pid_alias      = '';
-    $last_visit     = '';
-    $visist_count   = '';
-    $address        = '';
-    $email          = '';
-    $phone1         = '';
-    $phone2         = '';
-    $ptype          = '';
-    $intdoc         = '';
-    $bloodtype      = '';
-    $rh             = '';
-    $refhospital    = '';
-    $extdoc         = '';
-    $account_status = '';
-    $kin_fname      = '';
-    $kin_mname      = '';
-    $kin_sname      = '';
-    $kin_gender     = '';
-    $kin_address    = '';
-    $kin_email      = '';
-    $kin_phone1     = '';
-    $kin_phone2     = '';
-    $kin_relate     = '';
-    $dob            = '';
-    $marital_status = '';
-    $religion       = '';
-    $occupation     = '';
-    $country        = '';
+    $title = $fname = $mname = $sname = $gender = $user_id = $last_login = $total_logins = $address = $email = $phone1 = $phone2 = $kin_fname = $kin_mname = $kin_sname = $kin_gender = $kin_address = $kin_email = $kin_phone1 = $kin_phone2 = $kin_relate = $dob = $marital = $religion = $qualification = $country = '';
     
-    if ($patient instanceof Patient)
+    if ($int_profile instanceof Int_Profile)
     {
         // Init.
         $pid = '';
         
         // Fetching the Patient ID from memory
-        if ($session instanceof Session) $pid = $session->get_patient_id();
+        if ($session instanceof Session) $pid = (int)$session->user_id;
         
-        $patient_arr = $patient->fetch_patient( $pid );
-        if(!empty($patient_arr))
+        $profile_obj = $int_profile->fetch_profile_by_user_id($pid);
+        if(!empty($profile_obj))
         {
-            $title              = $patient_arr[0]['title'];
-            $fname              = $patient_arr[0]['first_name'];
-            $mname              = $patient_arr[0]['middle_name'];
-            $sname              = $patient_arr[0]['surname'];
-            $gender             = $patient_arr[0]['gender'];
-            $pid_alias          = $patient_arr[0]['id_alias'];
-            $last_visit         = $patient_arr[0]['last_visit_date'];
-            $visist_count       = $patient_arr[0]['visit_counter'];
-            $address            = $patient_arr[0]['address'];
-            $email              = $patient_arr[0]['email'];
-            $phone1             = $patient_arr[0]['phone_1'];
-            $phone2             = $patient_arr[0]['phone_2'];
-            $ptype              = $patient_arr[0]['patient_type'];
-            $intdoc             = $patient_arr[0]['assigned_doctor_id'];
-            $bloodtype          = $patient_arr[0]['blood_type'];
-            $rh                 = $patient_arr[0]['rh'];
-            $refhospital        = $patient_arr[0]['ref_hospital_id'];
-            $extdoc             = $patient_arr[0]['ref_doctor_id'];
-            $account_status     = $patient_arr[0]['account_status'];
-            $kin_fname          = $patient_arr[0]['kin_first_name'];
-            $kin_mname          = $patient_arr[0]['kin_middle_name'];
-            $kin_sname          = $patient_arr[0]['kin_surname'];
-            $kin_gender         = $patient_arr[0]['kin_gender'];
-            $kin_address        = $patient_arr[0]['kin_address'];
-            $kin_email          = $patient_arr[0]['kin_email'];
-            $kin_phone1         = $patient_arr[0]['kin_phone_1'];
-            $kin_phone2         = $patient_arr[0]['kin_phone_2'];
-            $kin_relate         = $patient_arr[0]['relationship'];
-            $dob                = $patient_arr[0]['date_of_birth'];
-            $marital_status     = $patient_arr[0]['marital_status'];
-            $religion           = $patient_arr[0]['religion'];
-            $occupation         = $patient_arr[0]['occupation'];
-            $country            = $patient_arr[0]['country'];
+            $title         = $profile_obj->title;
+            $fname         = $profile_obj->first_name;
+            $mname         = $profile_obj->middle_name;
+            $sname         = $profile_obj->surname;
+            $gender        = $profile_obj->gender;
+            $address       = $profile_obj->address;
+            $email         = $profile_obj->email;
+            $phone1        = $profile_obj->phone_1;
+            $phone2        = $profile_obj->phone_2;
+            $dob           = $profile_obj->date_of_birth;
+            $marital       = $profile_obj->marital_status;
+            $religion      = $profile_obj->religion;
+            $qualification = $profile_obj->qualification;
+            $country       = $profile_obj->country;
+            $kin_fname     = $profile_obj->kin_first_name;
+            $kin_mname     = $profile_obj->kin_middle_name;
+            $kin_sname     = $profile_obj->kin_surname;
+            $kin_gender    = $profile_obj->kin_gender;
+            $kin_address   = $profile_obj->kin_address;
+            $kin_email     = $profile_obj->kin_email;
+            $kin_phone1    = $profile_obj->kin_phone_1;
+            $kin_phone2    = $profile_obj->kin_phone_2;
+            $kin_relate    = $profile_obj->relationship;
         }
     }
 ?>
@@ -140,12 +95,12 @@
                                         <?php
                                             if($document instanceof Document)
                                             {
-                                                $doc = $document->fetch_thumb_by_patient_id($pid);
+                                                //$doc = $document->fetch_thumb_by_patient_id((int)$session->user_id);
                                                 if(!empty($doc))
                                                 {
-                                                    echo '<img id="pix_display" src="'.$doc->path.$doc->filename.'" class="rnd_oooo" width="100px" alt="" />';
+                                                    echo '<img src="'.$doc->path.$doc->filename.'" class="rnd_oooo" width="100px" alt="" />';
                                                 }else{
-                                                    echo '<img id="pix_display" src="../calls/images/patients/sample.jpg" class="rnd_oooo" width="100px" alt="" />';
+                                                    echo '<img src="../calls/images/patients/sample.jpg" class="rnd_oooo" width="100px" alt="" />';
                                                 }
                                             }
                                         ?>
@@ -154,33 +109,21 @@
                             <td class="percent100" style="vertical-align:top;">
                                 <table class="visible_table">
                                     <tr>
-                                        <td>Patient&nbsp;ID:</td>
-                                        <td class="bold">
-                                            <?php echo $pid_alias; ?>
-                                            <input type="hidden" name="txt_pid_alias" id="txt_pid_alias" value="<?php echo $pid_alias; ?>" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last&nbsp;Visit:</td>
-                                        <td class="bold">
-                                            <?php
-                                                // Init.
-                                                $raw_date = $date = $visit_date = '';
-                                                
-                                                if ('' != $last_visit)
-                                                {
-                                                    $raw_date   = substr($last_visit, 0, 10);
-                                                    $date       = explode('-', $raw_date);
-                                                    $visit_date = $date[2].'/'.$date[1].'/'.$date[0];
-                                                    
-                                                    echo $visit_date;
-                                                }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>No.&nbsp;of&nbsp;Visits:</td><td class="bold"><?php echo $visist_count; ?></td>
-                                    </tr>
+                                        <tr>
+                                    <td>User&nbsp;ID:</td><td class="bold"><?php //echo $pid_alias; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Last&nbsp;Login:</td>
+                                    <td class="bold">
+                                        <?php ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total&nbsp;Logins:</td>
+                                    <td class="bold">
+                                        <?php ?>
+                                    </td>
+                                </tr>
                                 </table>
                             </td>
                         </tr>
@@ -223,46 +166,57 @@
         
         <div class="l_float percent50">
             <div class="inner_pad">
-                <div id="fieldset_official" class="fieldset">
-                    <div class="legend">Official Details:</div>
+                <div id="fieldset_other" class="fieldset">
+                    <div class="legend">Other Details:</div>
                     <table class="visible_table">
                         <tr>
-                            <td class="percent35">Patient Type:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('patient_type'),'sel_ptype',$ptype); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Assigned Doctor:</td>
-                            <td><?php Form::selectbox($int_profile->dropdown_list('Doctor'),'sel_intdoc',$intdoc); ?></td>
-                        </tr>
-                        <tr>
-                            <td class="percent35">Blood Type:</td>
+                            <td class="percent35">Date of Birth:</td>
                             <td>
                                 <table class="inner_table">
                                     <tr>
-                                        <td class="percent40"><?php Form::selectbox(item_array('blood_type'),'sel_bloodtype',$bloodtype); ?></td>
-                                        <td class="r_align">RH: </td>
-                                        <td class="percent40"><?php Form::selectbox(item_array('rh'),'sel_rh',$rh); ?></td>
+                                        <td class="percent60">
+                                            <?php
+                                                // Init.
+                                                $raw_date = $date = $age_date = $age_year = $age = '';
+                                                
+                                                if ('' != $dob)
+                                                {
+                                                    $raw_date = substr($dob, 0, 10);
+                                                    $date     = explode('-', $raw_date);
+                                                    $age_date = $date[2].'/'.$date[1].'/'.$date[0];
+                                                    $age_year = $date[0];
+                                                    $age      = date('Y') - $age_year;
+                                                }
+                                                
+                                                Form::textbox('txt_dob',$age_date,array(
+                                                    'onchange' => "javascript:\$date_engine.get_age(this.value,'#txt_age');",
+                                                    'readonly' => 'true'                                                    
+                                                ));
+                                            ?>
+                                        </td>
+                                        <td class="r_align">Age:</td>                                        
+                                        <td class="r_align percent15">
+                                            <?php
+                                                Form::textbox('txt_age',$age,array(
+                                                    'onkeyup'  => "javascript:\$date_engine.get_dob(this.value,'#txt_dob');"
+                                                ));
+                                            ?>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td>Referring Hospital:</td>
-                            <td>
-                                <?php
-                                    Form::selectbox($hospital->dropdown_list('EXT'),'sel_refhospital',$refhospital,array(
-                                        'onchange' => "javascript:\$ajax_loading('ref_doc','../calls/includes/switch.php','&opt=ref_doc&value='+this.value);"
-                                    ));
-                                ?>
-                            </td>
+                            <td>Marital Status:</td>
+                            <td><?php Form::selectbox($option->dropdown_list('marital_status'),'sel_marital',$marital); ?></td>
                         </tr>
                         <tr>
-                            <td>Referring Doctor:</td>
-                            <td id="ref_doc"><?php Form::selectbox(array(),'sel_extdoc',$extdoc); ?></td>
+                            <td>Religion:</td>
+                            <td><?php Form::selectbox($option->dropdown_list('religion'),'sel_religion',$religion); ?></td>
                         </tr>
                         <tr>
-                            <td>Account Status:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('account_status'),'sel_status',$account_status); ?></td>
+                            <td>Country:</td>
+                            <td><?php Form::selectbox($option->dropdown_list('country'),'sel_country',$country); ?></td>
                         </tr>
                     </table>
                     <!-- Tooltip -->
@@ -323,70 +277,48 @@
         
         <div class="l_float percent50">
             <div class="inner_pad">
-                <div id="fieldset_other" class="fieldset">
-                    <div class="legend">Other Details:</div>
+                <div id="fieldset_qualification" class="fieldset">
+                    <div class="legend">Qualification Details:</div>
                     <table class="visible_table">
                         <tr>
-                            <td class="percent35">Date of Birth:</td>
-                            <td>
-                                <table class="inner_table">
-                                    <tr>
-                                        <td class="percent60">
-                                            <?php
-                                                // Init.
-                                                $raw_date = $date = $age_date = $age_year = $age = '';
-                                                
-                                                if ('' != $dob)
-                                                {
-                                                    $raw_date = substr($dob, 0, 10);
-                                                    $date     = explode('-', $raw_date);
-                                                    $age_date = $date[2].'/'.$date[1].'/'.$date[0];
-                                                    $age_year = $date[0];
-                                                    $age      = date('Y') - $age_year;
-                                                }
-                                                
-                                                Form::textbox('txt_dob',$age_date,array(
-                                                    'onchange' => "javascript:\$date_engine.get_age(this.value,'#txt_age');",
-                                                    'readonly' => 'true'                                                    
-                                                ));
-                                            ?>
-                                        </td>
-                                        <td class="r_align">Age:</td>                                        
-                                        <td class="r_align percent15">
-                                            <?php
-                                                Form::textbox('txt_age',$age,array(
-                                                    'onkeyup'  => "javascript:\$date_engine.get_dob(this.value,'#txt_dob');"
-                                                ));
-                                            ?>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <td class="percent35">
+                                <?php Form::textarea('qualification',$qualification); ?>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Marital Status:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('marital_status'),'sel_marital',$marital_status); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Religion:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('religion'),'sel_religion',$religion); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Occupation:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('occupation'),'sel_occupation',$occupation); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Country:</td>
-                            <td><?php Form::selectbox($option->dropdown_list('country'),'sel_country',$country); ?></td>
-                        </tr>
                     </table>
-                    <!-- Tooltip -->
-                    <div class="tooltip"><span class="dark_gray"></span><div class="tail"></div></div>
                 </div>
             </div>
         </div>
         
         <div class="percent100 clear"></div>
+        
+        <div class="l_float percent50">
+            <div class="inner_pad">
+                <div class="fieldset">
+                    <div class="legend">Change Password:</div>
+                    <table class="visible_table">
+                        <tr>
+                            <td colspan="2">Old Password:</td>
+                            <td colspan="2">
+                                <?php Form::password('old_pass'); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">New Password:</td>
+                            <td colspan="2">
+                                <?php Form::password('new_pass'); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Re-enter Password:</td>
+                            <td colspan="2">
+                                <?php Form::password('re_pass'); ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         
         <div class="l_float percent100">
             <div class="inner_pad">
@@ -394,7 +326,7 @@
                     <div class="legend">Controls:</div>
                     <table class="visible_table">
                         <tr>
-                            <td colspan="2"><button type="submit">Update Patient</button></td>
+                            <td colspan="2"><button type="submit">Update Profile</button></td>
                         </tr>
                     </table>
                 </div>
@@ -408,8 +340,8 @@
 <script type="text/javascript">
     $(document).ready(function()
     {
-        $init.equalize_heights(['#fieldset_contact','#fieldset_official']);
-        $init.equalize_heights(['#fieldset_nok','#fieldset_other']);
+        $init.equalize_heights(['#fieldset_contact','#fieldset_other']);
+        $init.equalize_heights(['#fieldset_nok','#fieldset_qualification']);
         
         // File uploader
         $('#btn_patient_pix').on('click', function()
@@ -526,7 +458,7 @@
             {
                 // Create an instance of the FormData() object to assemble form elements
                 var formData = new FormData($("#frm_new_patient")[0]);
-                formData.append('opt', 'update_patient')
+                formData.append('opt', 'update_profile')
                 $.ajax({
                     url: "../calls/includes/switch.php",
                     type: "POST",

@@ -64,6 +64,28 @@
             echo $filebox;                        
         }
         
+        public static function password($name,$value='',$action_arr=array())
+        {
+            // Init.
+            $textbox = '';
+            
+            $textbox  = "<div class='outer_box text_box'>";
+            $textbox .= "<input type='password' name='$name' id='$name' value='$value' class='text'";
+            
+            if (!empty($action_arr))
+            {                    
+                foreach($action_arr as $action_key => $action_value)
+                {
+                    $textbox .= ' '.$action_key.'='.$action_value.' ';
+                }
+            }
+            
+            $textbox .= "/>";
+            $textbox .= "</div>";
+            
+            echo $textbox;                        
+        }
+        
         /**
          * Form::selectbox()
          * 

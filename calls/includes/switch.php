@@ -157,20 +157,20 @@
                             if ($_FILES['fil_patient_pix']['error'] === UPLOAD_ERR_OK)
                             {
                                 // Session instance
-                                $session = new Session();
-                                $thumb   = "";
+                                $session                  = new Session();
+                                $thumb                    = "";
                                 $upload_path              = UPLOADS.DIRECTORY_SEPARATOR."pictures".DIRECTORY_SEPARATOR."thumbs".DIRECTORY_SEPARATOR;
                                 $extension                = pathinfo(basename($_FILES['fil_patient_pix']['name']), PATHINFO_EXTENSION);
                                 $new_name                 = str_replace('/', '-', $_POST['txt_pid_alias']);
-                                $doc_arr['patient_id']      = $session->get_patient_id();
+                                $doc_arr['patient_id']    = $session->get_patient_id();
                                 $doc_arr['filename']      = $new_name.'.'.$extension;
                                 $doc_arr['type']          = $_FILES['fil_patient_pix']['type'];
                                 $doc_arr['size']          = $_FILES['fil_patient_pix']['size'];
-                                $doc_arr['path']    = THUMB_PATH;
+                                $doc_arr['path']          = THUMB_PATH;
                                 $doc_arr['date_created']  = get_current_date();
                                 $doc_arr['date_modified'] = get_current_date();
                                 
-                                $document = new Document($doc_arr);
+                                $document                 = new Document($doc_arr);
                                 if($document instanceof Document)
                                 {
                                     try
@@ -180,12 +180,15 @@
                                     catch (Exception $e)
                                     {
                                         //handle errors
-                                        $json['error'] = $e->getMessage();
+                                        $json['error']    = $e->getMessage();
                                     }
+                                    // Resize thumbnail
                                     $thumb->adaptiveResize(100, 100);
+                                    // Save thumbnail
                                     $thumb->save($upload_path.$doc_arr['filename']);
+                                    
                                     // Insert record
-                                    $document->save_document();
+                                    $document->insert_document();
                                 }
                             }
                         }
@@ -212,6 +215,53 @@
                     
                     if($status)
                     {
+                        if(!empty($_FILES['fil_patient_pix']['name']))
+                        {
+                            if ($_FILES['fil_patient_pix']['error'] === UPLOAD_ERR_OK)
+                            {
+                                // Session instance
+                                $session                  = new Session();
+                                $thumb                    = "";
+                                $upload_path              = UPLOADS.DIRECTORY_SEPARATOR."pictures".DIRECTORY_SEPARATOR."thumbs".DIRECTORY_SEPARATOR;
+                                $extension                = pathinfo(basename($_FILES['fil_patient_pix']['name']), PATHINFO_EXTENSION);
+                                $new_name                 = str_replace('/', '-', $_POST['txt_pid_alias']);
+                                $doc_arr['filename']      = $new_name.'.'.$extension;
+                                $doc_arr['type']          = $_FILES['fil_patient_pix']['type'];
+                                $doc_arr['size']          = $_FILES['fil_patient_pix']['size'];
+                                $doc_arr['date_modified'] = get_current_date();
+                                
+                                $document = new Document(array());
+                                if($document instanceof Document)
+                                {
+                                    $doc = $document->fetch_thumb_by_patient_id((int)$session->get_patient_id());
+                                    if($doc)
+                                    {
+                                        try
+                                        {
+                                            $thumb = PhpThumbFactory::create($_FILES['fil_patient_pix']['tmp_name']);
+                                        }
+                                        catch (Exception $e)
+                                        {
+                                            //handle errors
+                                            $json['error'] = $e->getMessage();
+                                        }
+                                        // Resize thumbnail
+                                        $thumb->adaptiveResize(100, 100);
+                                        // Save thumbnail
+                                        $thumb->save($upload_path.$doc_arr['filename']);
+                                        
+                                        // Assign update values
+                                        $doc->filename      = $doc_arr['filename'];
+                                        $doc->type          = $doc_arr['type'];
+                                        $doc->size          = $doc_arr['size'];
+                                        $doc->date_modified = $doc_arr['date_modified'];
+                                        
+                                        // Update record
+                                        $document->update_document();
+                                    }
+                                }
+                            }
+                        }
                         $json['status'] = 'true';
                     }
                     else
@@ -439,6 +489,23 @@
                         </form>";
                     break;
                 }
+            break;
+            case 'update_profile':
+                // Init.
+                $json = array();
+                
+                // Session instance
+                $session = new Session();
+                       
+                // Patient instance
+                $int_profile = new Int_Profile();
+                
+                if($int_profile instanceof Int_Profile)
+                {
+                    $profile_obj = $int_profile->fetch_profile_by_user_id((int)$session->get_patient_id());
+                    
+                }
+                echo json_encode($json);
             break;
         }
     }

@@ -13,16 +13,27 @@
         <div class="l_float" style="margin-left: -1px;">
             <ul>
                 <li>
-                    <table>
+                    <a href="javascript:edit_profile();" title="Edit Profile">
+                        <table class="inner_table">
+                            <tr>
+                                <td style="width:32px;">
+                                    <span class="sub_menu32x32" style="background-position: 0 -96px;">&nbsp;</span>
+                                </td>
+                                <td>
+                                    Edit Profile
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
+                </li>
+                <li>
+                    <table class="inner_table">
                         <tr>
-                            <td style="vertical-align: middle;">
+                            <td style="width:2px;">
                                 <span class="sub_menu32x32" style="background-position: center -256px; width: 2px;">&nbsp;</span>
                             </td>
                         </tr>
                     </table>
-                </li>
-                <li>
-                    &nbsp;
                 </li>
             </ul>
         </div>
@@ -63,10 +74,18 @@
     $(document).ready(function()
     {
         // Load the Left/Right Menu
-        $file_loader.load_left_pane('general_settings/default_side_menu');
-        $file_loader.load_right_pane('patients/menu_right');
+        $file_loader.load_left_pane('my_profile/menu_left');
+        $file_loader.load_middle_pane('my_profile/profile_display');
+        $file_loader.load_right_pane('my_profile/menu_right');
         
         // Balance the height
         $init.height_balance();
+        
+        // Set the interface to edit existing Profile details
+    edit_profile = function()
+    {
+        $file_loader.load_middle_pane('my_profile/profile_edit');
+        $file_loader.load_left_pane('my_profile/menu_left');
+    }
     });
 </script>
